@@ -1,4 +1,240 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Geog 771</title>
+
+</head><body style="background-color: #1B1A3E;" alink="#3813EF" link="#FFFFFF" vlink="#EF1363">
+<div style="text-align: center; color:#1B1A3E;">Maps<br>
+<br>
+<br>
+<img src="geog771.png" alt="prettypicture" align="middle" style="width:304px;height;228px;"> 
+<div align="left" style="text-align: topleft;"><br>
+<br>
+ <p><a href="homepage.html"><span style="text-decoration: underline;">Lab 1</span></a></p><br>
+ <p><a href="lab1.html"><span style="text-decoration: underline;">Lab 2</span></a></p><br>
+ <p><a href="lab1.html"><span style="text-decoration: underline;">Lab 3</span></a></p><br> 
+ <p><a href="bug.html"><span style="text-decoration: underline;">Contact</span></a></p><br>
+<br>
+<div style="text-align: center; color:#FFFFFF;">Mapmaker Mapmaker Make Me A Map <Br> Find Me A Find, Catch Me
+A Catchment</div>
+
+<p><br></p><title>Leaflet Map</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+<div id="mymap" align="center" style="width: 600px; height: 400px;"></div>
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script><script>
+var mymap = L.map('mymap').setView([-25.344646, 131.035904], 13);
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
+maxZoom: 18,
+attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+id: 'mapbox.streets'
+}).addTo(mymap);
+</script>
+
+<script>
+var Uluru_polygon = { "type": "Feature",
+"properties":{"name": "Uluru_polygon"},
+"geometry": {
+"type": "Polygon",
+"coordinates": [
+[
+[
+131.0233825188758,
+-25.34756337173266,
+0
+],
+[
+131.023710759722,
+-25.35076453693182,
+0
+],
+[
+131.0245256379996,
+-25.35098799844248,
+0
+],
+[
+131.0258059737128,
+-25.35109001172097,
+0
+],
+[
+131.0264969858136,
+-25.35159143025201,
+0
+],
+[
+131.0262370343509,
+-25.35232375640214,
+0
+],
+[
+131.0268172230645,
+-25.35404873286714,
+0
+],
+[
+131.029192760413,
+-25.35504149509943,
+0
+],
+[
+131.0312991873206,
+-25.35442704440087,
+0
+],
+[
+131.0332771785107,
+-25.35275611239848,
+0
+],
+[
+131.0376731975289,
+-25.35193158227949,
+0
+],
+[
+131.0393510973556,
+-25.35131340221842,
+0
+],
+[
+131.0396617090965,
+-25.35052981289463,
+0
+],
+[
+131.0417160136723,
+-25.3508723942184,
+0
+],
+[
+131.0437661297208,
+-25.35047701024546,
+0
+],
+[
+131.0441323292195,
+-25.34996838492295,
+0
+],
+[
+131.0470179286181,
+-25.35026026084836,
+0
+],
+[
+131.0491880150981,
+-25.34896564645652,
+0
+],
+[
+131.0520932971039,
+-25.34885905057232,
+0
+],
+[
+131.0521836747287,
+-25.34767808244265,
+0
+],
+[
+131.0469512677753,
+-25.34258521701391,
+0
+],
+[
+131.0421266846112,
+-25.3403509212025,
+0
+],
+[
+131.0361300397711,
+-25.33805808069813,
+0
+],
+[
+131.0348425389413,
+-25.33836332647679,
+0
+],
+[
+131.0334849942347,
+-25.33761663240298,
+0
+],
+[
+131.0303107537535,
+-25.3367976069275,
+0
+],
+[
+131.0279824365185,
+-25.33908559834335,
+0
+],
+[
+131.0297186194696,
+-25.3406422907728,
+0
+],
+[
+131.0261709437664,
+-25.34057617250471,
+0
+],
+[
+131.022306018131,
+-25.343655185059,
+0
+],
+[
+131.0231905306036,
+-25.34547627590925,
+0
+],
+[
+131.0246557259891,
+-25.34705705222774,
+0
+],
+[
+131.0233825188758,
+-25.34756337173266,
+0
+]
+]
+]
+}};
+L.geoJson(Uluru_polygon, { color: "#ff4000", fillOpacity: "0.5"} ).addTo(mymap);
+L.marker([-25.344646, 131.035904]).addTo(mymap)
+.bindPopup("Uluru").openPopup();
+</script>
+</body></html>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+</body></html>
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head><title>Lab 1</title>
 
  </head><body style="background-color: #1B1A3E;" alink="#3813EF" link="#FFFFFF" vlink="#EF1363">

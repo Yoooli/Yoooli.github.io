@@ -1,3 +1,28 @@
+<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+...
+<div id="map"></div>
+...
+<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+<script>
+// get the viz.json url from the CARTO Editor
+// - click on visualize
+// - create new visualization
+// - make visualization public
+// - click on publish
+// - go to API tab
+
+window.onload = function() {
+  cartodb.createVis('map', 'https://yoooli.carto.com/api/v2/viz/4f82fe0a-5dd0-11e6-aec0-0e3a376473ab/viz.json');
+}
+</script>
+
+
+
+
+
+
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Geog 771</title>

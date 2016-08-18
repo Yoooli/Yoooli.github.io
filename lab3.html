@@ -6,17 +6,7 @@
 <div id="set"></div>
 ...
 <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
-<script>
-// get the viz.json url from the CARTO Editor
-// - click on visualize
-// - create new visualization
-// - make visualization public
-// - click on publish
-// - go to API tab
-window.onload = function() {
-  cartodb.createVis('set', 'https://yoooli.carto.com/api/v2/viz/4f82fe0a-5dd0-11e6-aec0-0e3a376473ab/viz.json');
-}
-</script>
+
 
 
 </head><body style= alink="E11818" link="E118D7" vlink="#FFFFFF" >
@@ -66,17 +56,17 @@ remaining when its surroundings eroded because of its relative resistance to wea
 <table style="text-align: left; width: 100%; background-color:#CEE3F6; border="0" cellpadding="2" cellspacing="0">
 <tbody>
 <tr>
-<td> <div align="center"
-  <p><br></p><title>Leaflet Map</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css">
-<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
-<div id="set" align="center" style="width: 800px; height: 600px;"></div>
-<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script><script>
-var mymap = L.map('set').setView([-25.344646, 131.035904], 13);
+<td> 
+ <div id="set"></div>
 
+<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+<script>
+
+window.onload = function() {
+  cartodb.createVis('set', 'https://yoooli.carto.com/api/v2/viz/4f82fe0a-5dd0-11e6-aec0-0e3a376473ab/viz.json');
+}
 </script>
 
-  </div>
 </td>
 </tr>
 </tbody>

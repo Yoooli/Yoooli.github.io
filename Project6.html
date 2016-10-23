@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>Geog 771</title>
+   
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="http://npmcdn.com/leaflet@1.0.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="leaflet.fusesearch.css" />
+  <script src="http://npmcdn.com/leaflet@1.0.1/dist/leaflet.js"></script>
+  <script src="fuse.js"></script>
+  <script src="leaflet.fusesearch.js"></script>
+
+<style>
+  
+.info {
+  padding: 10px; 
+  font: 12px font, Helvetica;
+  background: white;
+  background: rgba(255,255,255,0.9); 
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  border-radius: 5px;
+}
+
+.info h4 {
+  margin: 0 0 0px;
+  color: black; 
+}
+
+.legend {
+  text-align: left;
+  line-height: 22px;
+  color: #555;
+  font-weight: bold;
+}
+
+.legend i {
+  border: 1px solid rgba(0,0,0,1);
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.8;
+  line-height: 10px;
+  font-weight: normal;
+}
+
+td.mine {
+   width:10%;
+  text-align: center;
+  vertical-align: top;
+  background-color: #2E9AFE;
+}
+
+td.mine1 {
+  text-align:center;
+  vertical-align:middle;
+  background-color:rgb(204,204,255);
+  font-family: Helvetica, Arial, Sans-serif;
+}
+
+</style>
+
+</head>
+<body>
+
+  <style>
+    link="#FFFFFF" vlink="#FFFFFF"
+  </style>
+
+  <table style="text-align: left; width: 100%;" border="0" cellpaddint="2" cellspacing="0">
+      
+    <tbody>
+    <tr>
+    <td class="mine">
+
+    <p> <a href="index.html"><span style="text-decoration:underline;">Home</span></a></p>
+    <p> <a href="Lab_2.html"><span style="text-decoration:underline;">Lab 2</span></a></p>
+    <p> <a href="Lab_3.html"><span style="text-decoration:underline;">Lab 3</span></a></p>
+    <p> <a href="Lab_4.html"><span style="text-decoration:underline;">Lab 4</span></a></p>
+    <p> <a href="Lab_5.html"><span style="text-decoration:underline;">Lab 5</span></a></p>
+    <p> <a href="Project.html"><span style="text-decoration:underline;">Lab 6</span></a></p>
+
+    </td>
+
+    <td class="mine1">
+
+    <h1>  Geography 771  </h1>
+      <h2>Spatial Analysis and Geocomputation</h2>
+      <h2>Yuli Heled</h2>
+      <h2>2016 </h2> 
+    </td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:left; vertical-align:middle;"> 
+
+<h1>What kind of tourist are you?</h1>
+Below is a map showing the number of tourist arrivals per country for 2013 or 2014 depending on available data. Hover over a country or  search for the one you want to see the number of tourists and how it ranks against the rest of the world, from most to least touristed. When you select all of the countries you have visited you'll see how many you've been to and what your favoured type of country is based on this ranking. 
+<br>
+For country information  <a href="countryinfo.html"><span style="text-decoration:underline;">CLICK HERE</span></a>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;" colspan="2">
+  <p id="VisitorInfo"/>
+</td></tr>
+</tbody></table>
+
+ <table align="center" style="width:100%; height:1000px">
+ <tbody>
+ <tr>
+ <td align="center" valign="top" style="width:100%;">
+
+<div align="center" vertical-align="top" id="map" style="width: 80%; height: 85%"></div>
+
+<script type="text/javascript" src="tour.js"></script>
+
+<script>
+
+var map = L.map('map').setView([ -17.57,3.99], 2);
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
+      maxZoom: 18,
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Tourism Data 2014/2013 © <a href="http://data.worldbank.org/indicator/ST.INT.ARVL"> World Bank </a>'  +  'Country Polygons © <a href="http://data.okfn.org/data/datasets/geo-boundaries-world-110m"> Frictionless Data  </a>'  ,
+      id: 'mapbox.streets'
+    }).addTo(map); 
+
+    </script>
+
+<script> 
+
+var sumRank = 0,
+    nSelected = 0,
+    nSelectedWithData = 0,
+    nCountries = 0;
+
+for(k = 0; k < tour.features.length; ++k) {
+    if( tour.features[k].properties.tourism > 0 ) {
+	nCountries += 1;
+    }
+}
+
+function showSelected()
+{
+    if( nSelected == 0 ) {
+	msgn = " So where have you been? Click em&rsquo; all!<br/>";
+	msgl = "";
+    } else {
+	msgn = "You visited " + nSelected + " " +
+	    (nSelected == 1 ? "country" :  "countries") + ".";
+	if( nSelected == 1 ) {
+	    msgl = " You like to be at home.";
+	} else {
+	    if( nSelectedWithData > 1 ) {
+		var m = sumRank / nSelectedWithData;
+		
+		if( m > nCountries * 0.7 ) {
+		    msgl = "You like to be off the beaten track.";
+		} else if ( m < nCountries * 0.3 ) {
+		    msgl = "You like to walk on a path well traveled.";
+		} else {
+		    msgl = "You like to walk on both lonely roads and busy streets.";
+		}
+            } else {
+		msgl = ""; 
+	    }
+	    if( nSelected > 1 ) {
+		msgl  = msgl + "&nbsp;<button type='button' onclick='unselectAll()'>Clear</button>";
+	    }
+	}
+    }
+    document.getElementById("VisitorInfo").innerHTML = msgn + msgl;
+}
+
+function unselectAll()
+{
+  map.eachLayer(function(layer){
+      if( layer.isSelected ) {
+	  toggleLayer(layer);
+      }
+      });
+}
+
+showSelected();
+
+var ngrades;
+var nRanges = 7;
+ngrades = new Array(nRanges);
+ngrades[0] = 0;
+var range = Math.floor(nCountries / nRanges);
+for(i = 1; i < nRanges; ++i) {
+    for(k = 0; k < tour.features.length; ++k) {
+	var p = tour.features[k].properties;
+        if( p.tourism > 0 && p.rank == i * range) {
+	    ngrades[nRanges - i] =  p.tourism;
+	    break;
+	}
+    }
+}
+
+function numberRep(n) {
+    if ( n < 1e3 ) {
+	return n;
+    } else if ( n < 1e6 ) {
+	return (n/1e3).toFixed(0) + "K";
+    } else if ( n < 1e9 ) {
+	return (n/1e6).toFixed(0) + "M";
+    }
+    return (n/1e9).toFixed(0) + "G";
+}
+    
+function getColor(d) {
+    if( d == 0 ) {
+	return 'white';
+    }
+    colors = ['#00441b','#006d2c','#238b45',
+	      '#41ab5d','#74c476', '#a1d99b', '#c7e9c0', '#e5f5e0', '#f7fcf5', '#c2e669'];
+    for(i = 0; i < ngrades.length; ++i) {
+	if( d > ngrades[ngrades.length - 1 - i] ) {
+	    return colors[i];
+	}
+    }
+    
+   if( false ) {	    
+    return d > 64995000 ?'#00441b': 
+           d > 39811000 ?'#006d2c':
+           d > 27437000 ?'#238b45':
+           d > 18259000 ?'#41ab5d':
+           d > 10617000 ?'#74c476':
+           d > 6868000 ?'#a1d99b':
+           d > 3990000 ?'#c7e9c0':
+           d > 1905000 ?'#e5f5e0':
+           d > 595000?'#f7fcf5':
+          d > 0 ? '#c2e669' :
+        //d = 0 ? '#fd8d3c':
+	//  d > 15 ? '#f16913':
+        // d > 5  ? '#d94801':
+        // d < 1  ? '#a63603':
+        // d > 0  ? '#FFFFFF':
+           'transparent'    ;
+       }
+}
+
+// return d > 64995000 ?'#31a354': 
+//           d > 39811000 ?'#78c679':
+//
+function style(feature) {
+    return {
+	fillColor:   getColor(feature.properties.tourism),
+	weight:      0.8,
+	opacity:     1,
+	color:       'grey',
+	fillOpacity: 0.9
+    };
+}
+
+var geojson;
+
+function highlightFeatureLayer(layer)
+{
+    layer.setStyle({weight:      2,
+                    color:       '#FF0000',
+                    fillOpacity: 0.8 });
+    showFeatureValue(layer);
+}
+
+function highlightFeature(e)
+{
+    var layer = e.target;
+    highlightFeatureLayer(layer);
+}
+
+function showFeatureValue(layer) {
+  if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+    layer.bringToFront ();
+  }
+  info.update(layer.feature.properties);
+}
+
+function toggleLayer(layer)
+{
+    if( layer.isSelected ) {
+	layer.setStyle( style(layer.feature) );
+	resetLayer(layer);
+	
+	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+	    layer.bringToFront();
+	}
+	nSelected -= 1;
+	if( layer.feature.properties.tourism > 0 ) {
+	  sumRank -= layer.feature.properties.rank;
+	  nSelectedWithData -= 1;
+	}
+    } else /* unselected */ {
+	highlightFeatureLayer(layer);
+	nSelected += 1;
+	if( layer.feature.properties.tourism > 0 ) {
+	  sumRank += layer.feature.properties.rank;
+	  nSelectedWithData += 1;
+	}
+    }
+
+    showSelected();
+
+    // toggle selected state
+    layer.isSelected = ! layer.isSelected;
+}
+
+function toggleFeature(e) {
+    var layer = e.target;
+    toggleLayer(layer);
+    // if( layer.isSelected ) {
+    // 	layer.setStyle( style(layer.feature) );
+    // 	resetHighlight(e);
+	
+    // 	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+    // 	    layer.bringToFront();
+    // 	}
+    // 	nSelected -= 1;
+    // 	if( layer.feature.properties.tourism > 0 ) {
+    // 	  sumRank -= layer.feature.properties.rank;
+    // 	  nSelectedWithData -= 1;
+    // 	}
+    // } else /* unselected */ {
+    // 	highlightFeature(e);
+    // 	nSelected += 1;
+    // 	if( layer.feature.properties.tourism > 0 ) {
+    // 	  sumRank += layer.feature.properties.rank;
+    // 	  nSelectedWithData += 1;
+    // 	}
+    // }
+
+    // showSelected();
+
+    // // toggle selected state
+    // layer.isSelected = ! layer.isSelected;
+}
+
+
+function resetLayer(layer) {
+    if( ! layer.isSelected ) {
+	geojson.resetStyle(layer);
+	info.update();
+    } else { // else selected: do nothing
+	map.closePopup()
+    }
+}
+
+function resetHighlight(e) {
+    resetLayer(e.target);
+}
+
+function onEachFeature(feature, layer) { 
+    layer.on ({ mousedown: toggleFeature,
+		mouseover: highlightFeature, 
+		mouseout: resetHighlight
+              });
+    
+    layer.isSelected = false;
+    
+    layer.bindPopup(feature.properties.sovereignt);
+    feature.layer = layer; 
+}
+
+var searchCtrl = L.control.fuseSearch();
+searchCtrl.addTo(map);
+
+searchCtrl.indexFeatures(tour, ['sovereignt']);
+
+geojson = L.geoJson(tour, {style:style, onEachFeature:onEachFeature}).addTo(map);
+
+var info = L.control();
+
+info.onAdd = function (map) {
+  this._div = L.DomUtil.create('div', 'info');
+  this.update();
+  return this._div;
+};
+
+info.update = function (props) { 
+  if ( props ) {
+       this._div.innerHTML = props.sovereignt + ': ' +
+	(props.tourism == 0 ? 'no data' : (props.tourism + " tourists, rank (" + (parseInt(props.rank) + 1) + ")"));
+    } else {
+     this._div.innerHTML = '';
+    }
+};
+
+info.addTo(map);
+
+var legend = L.control({position: 'topleft'});
+
+legend.onAdd = function (map) {
+    var div = L.DomUtil.create ('div', 'info legend');
+    var labels = ["Tourists per year<br>2013/2014"];
+    
+    if( true ) {
+	labels.push(('<i style="background:' + getColor(0) + '"></i> ') + "No Data");
+	for (var i = 1; i < ngrades.length; i++) {
+	    var from = ngrades[i-1];
+	    var to = ngrades[i];
+	labels.push(
+	    '<i style="background:' + getColor(from+1) + '"></i> ' +
+		numberRep(from) + "-" + numberRep(to)	);
+	}
+	labels.push("K: thousands");
+	labels.push("M: millions");
+	div.innerHTML = labels.join('<br>');
+	return div;
+   } else {
+    
+    var div = L.DomUtil.create ('div', 'info legend');
+    var grades = [,0, 595000, 1905000, 3990000, 6868000, 10617000, 18259000, 27437000, 39811000,64995000];
+    var key_labels = ["No Data for 2014", "Low Tourist Influx <595000",
+		      numberRep("595000") + "-" + numberRep(10905000) , "10905000-3990000",
+		      "3990000-6868000", "6868000-10617000", "10617000-18259000", "18259000-27437000",
+		      "27437000-39811000", "39811000-64995000", " High Tourist Influx >64995000"];
+
+    for (var i = 0; i < grades.length; i++) {
+	from = grades[i];
+	to = grades[i + 1];
+	labels.push(
+	    '<i style="background:' + getColor(from+1) + '"></i> ' +
+		key_labels[i]);
+    }
+    div.innerHTML = labels.join('<br>');
+    return div;
+	}
+};
+
+legend.addTo(map);
+
+</script>
+
+</td></tr></tbody></table>
+
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>Geog 771</title>
+   
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="http://npmcdn.com/leaflet@1.0.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="leaflet.fusesearch.css" />
+  <script src="http://npmcdn.com/leaflet@1.0.1/dist/leaflet.js"></script>
+  <script src="fuse.js"></script>
+  <script src="leaflet.fusesearch.js"></script>
+
+<style>
+  
+.info {
+  padding: 10px; 
+  font: 12px font, Helvetica;
+  background: white;
+  background: rgba(255,255,255,0.9); 
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  border-radius: 5px;
+}
+
+.info h4 {
+  margin: 0 0 0px;
+  color: black; 
+}
+
+.legend {
+  text-align: left;
+  line-height: 22px;
+  color: #555;
+  font-weight: bold;
+}
+
+.legend i {
+  border: 1px solid rgba(0,0,0,1);
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.8;
+  line-height: 10px;
+  font-weight: normal;
+}
+
+td.mine {
+   width:10%;
+  text-align: center;
+  vertical-align: top;
+  background-color: #2E9AFE;
+}
+
+td.mine1 {
+  text-align:center;
+  vertical-align:middle;
+  background-color:rgb(204,204,255);
+  font-family: Helvetica, Arial, Sans-serif;
+}
+
+</style>
+
+</head>
+<body>
+
+  <style>
+    link="#FFFFFF" vlink="#FFFFFF"
+  </style>
+
+  <table style="text-align: left; width: 100%;" border="0" cellpaddint="2" cellspacing="0">
+      
+    <tbody>
+    <tr>
+    <td class="mine">
+
+    <p> <a href="index.html"><span style="text-decoration:underline;">Home</span></a></p>
+    <p> <a href="Lab_2.html"><span style="text-decoration:underline;">Lab 2</span></a></p>
+    <p> <a href="Lab_3.html"><span style="text-decoration:underline;">Lab 3</span></a></p>
+    <p> <a href="Lab_4.html"><span style="text-decoration:underline;">Lab 4</span></a></p>
+    <p> <a href="Lab_5.html"><span style="text-decoration:underline;">Lab 5</span></a></p>
+    <p> <a href="Project.html"><span style="text-decoration:underline;">Lab 6</span></a></p>
+
+    </td>
+
+    <td class="mine1">
+
+    <h1>  Geography 771  </h1>
+      <h2>Spatial Analysis and Geocomputation</h2>
+      <h2>Yuli Heled</h2>
+      <h2>2016 </h2> 
+    </td>
+</tr>
+<tr>
+
+<td style="text-align:center; vertical-align:middle;" colspan="2"> 
+
+<h1>What kind of tourist are you?</h1>
+
+
+<table>
+ 
+<tr>
+    <th>Rank</th>
+    <th>Country</th>
+    <th>Number of Turists (2013/2014)</th>
+  </tr>
+
+<tr><td> 1 </td> <td> North America </td> <td> 91772000 </td> </tr>
+<tr><td> 2 </td> <td> France </td> <td> 83767000 </td> </tr>
+<tr><td> 3 </td> <td> Spain </td> <td> 64995000 </td> </tr>
+<tr><td> 4 </td> <td> China </td> <td> 55622000 </td> </tr>
+<tr><td> 5 </td> <td> Italy </td> <td> 48576000 </td> </tr>
+<tr><td> 6 </td> <td> Turkey </td> <td> 39811000 </td> </tr>
+<tr><td> 7 </td> <td> Germany </td> <td> 32999000 </td> </tr>
+<tr><td> 8 </td> <td> United Kingdom </td> <td> 32613000 </td> </tr>
+<tr><td> 9 </td> <td> Falkland Islands </td> <td> 32613000 </td> </tr>
+<tr><td> 10 </td> <td> Russia </td> <td> 32421000 </td> </tr>
+<tr><td> 11 </td> <td> Mexico </td> <td> 29346000 </td> </tr>
+<tr><td> 12 </td> <td> Malaysia </td> <td> 27437000 </td> </tr>
+<tr><td> 13 </td> <td> Austria </td> <td> 25291000 </td> </tr>
+<tr><td> 14 </td> <td> Thailand </td> <td> 24810000 </td> </tr>
+<tr><td> 15 </td> <td> Greece </td> <td> 22033000 </td> </tr>
+<tr><td> 16 </td> <td> Saudi Arabia </td> <td> 18259000 </td> </tr>
+<tr><td> 17 </td> <td> Canada </td> <td> 16537000 </td> </tr>
+<tr><td> 18 </td> <td> Poland </td> <td> 16000000 </td> </tr>
+<tr><td> 19 </td> <td> South Korea </td> <td> 14202000 </td> </tr>
+<tr><td> 20 </td> <td> Netherlands </td> <td> 13925000 </td> </tr>
+<tr><td> 21 </td> <td> Japan </td> <td> 13413000 </td> </tr>
+<tr><td> 22 </td> <td> Ukraine </td> <td> 12712000 </td> </tr>
+<tr><td> 23 </td> <td> Hungary </td> <td> 12140000 </td> </tr>
+<tr><td> 24 </td> <td> Croatia </td> <td> 11623000 </td> </tr>
+<tr><td> 25 </td> <td> Czech Republic </td> <td> 10617000 </td> </tr>
+<tr><td> 26 </td> <td> Morocco </td> <td> 10283000 </td> </tr>
+<tr><td> 27 </td> <td> Denmark </td> <td> 10267000 </td> </tr>
+<tr><td> 28 </td> <td> Egypt </td> <td>  9628000 </td> </tr>
+<tr><td> 29 </td> <td> South Africa </td> <td>  9549000 </td> </tr>
+<tr><td> 30 </td> <td> Indonesia </td> <td>  9435000 </td> </tr>
+<tr><td> 31 </td> <td> Switzerland </td> <td>  9158000 </td> </tr>
+<tr><td> 32 </td> <td> Portugal </td> <td>  9092000 </td> </tr>
+<tr><td> 33 </td> <td> Ireland </td> <td>  8813000 </td> </tr>
+<tr><td> 34 </td> <td> Romania </td> <td>  8442000 </td> </tr>
+<tr><td> 35 </td> <td> Belgium </td> <td>  7887000 </td> </tr>
+<tr><td> 36 </td> <td> Vietnam </td> <td>  7874000 </td> </tr>
+<tr><td> 37 </td> <td> India </td> <td>  7679000 </td> </tr>
+<tr><td> 38 </td> <td> Bulgaria </td> <td>  7311000 </td> </tr>
+<tr><td> 39 </td> <td> Australia </td> <td>  6868000 </td> </tr>
+<tr><td> 40 </td> <td> Brazil </td> <td>  6430000 </td> </tr>
+<tr><td> 41 </td> <td> Tunisia </td> <td>  6069000 </td> </tr>
+<tr><td> 42 </td> <td> Argentina </td> <td>  5931000 </td> </tr>
+<tr><td> 43 </td> <td> Sweden </td> <td>  5660000 </td> </tr>
+<tr><td> 44 </td> <td> Georgia </td> <td>  5516000 </td> </tr>
+<tr><td> 45 </td> <td> Dominican Republic </td> <td>  5141000 </td> </tr>
+<tr><td> 46 </td> <td> Iran </td> <td>  4967000 </td> </tr>
+<tr><td> 47 </td> <td> Norway </td> <td>  4855000 </td> </tr>
+<tr><td> 48 </td> <td> Philippines </td> <td>  4833000 </td> </tr>
+<tr><td> 49 </td> <td> Kazakhstan </td> <td>  4560000 </td> </tr>
+<tr><td> 50 </td> <td> Cambodia </td> <td>  4503000 </td> </tr>
+<tr><td> 51 </td> <td> Finland </td> <td>  4226000 </td> </tr>
+<tr><td> 52 </td> <td> Jordan </td> <td>  3990000 </td> </tr>
+<tr><td> 53 </td> <td> Chile </td> <td>  3674000 </td> </tr>
+<tr><td> 54 </td> <td> Albania </td> <td>  3341000 </td> </tr>
+<tr><td> 55 </td> <td> Puerto Rico </td> <td>  3246000 </td> </tr>
+<tr><td> 56 </td> <td> Peru </td> <td>  3215000 </td> </tr>
+<tr><td> 57 </td> <td> Myanmar </td> <td>  3081000 </td> </tr>
+<tr><td> 58 </td> <td> Cuba </td> <td>  2970000 </td> </tr>
+<tr><td> 59 </td> <td> Israel </td> <td>  2927000 </td> </tr>
+<tr><td> 60 </td> <td> Estonia </td> <td>  2918000 </td> </tr>
+<tr><td> 61 </td> <td> Qatar </td> <td>  2826000 </td> </tr>
+<tr><td> 62 </td> <td> New Zealand </td> <td>  2772000 </td> </tr>
+<tr><td> 63 </td> <td> Uruguay </td> <td>  2682000 </td> </tr>
+<tr><td> 64 </td> <td> Colombia </td> <td>  2565000 </td> </tr>
+<tr><td> 65 </td> <td> Costa Rica </td> <td>  2527000 </td> </tr>
+<tr><td> 66 </td> <td> Cyprus </td> <td>  2441000 </td> </tr>
+<tr><td> 67 </td> <td> Slovenia </td> <td>  2411000 </td> </tr>
+<tr><td> 68 </td> <td> Algeria </td> <td>  2301000 </td> </tr>
+<tr><td> 69 </td> <td> Azerbaijan </td> <td>  2160000 </td> </tr>
+<tr><td> 70 </td> <td> Jamaica </td> <td>  2080000 </td> </tr>
+<tr><td> 71 </td> <td> Lithuania </td> <td>  2063000 </td> </tr>
+<tr><td> 72 </td> <td> Zimbabwe </td> <td>  1905000 </td> </tr>
+<tr><td> 73 </td> <td> Latvia </td> <td>  1843000 </td> </tr>
+<tr><td> 74 </td> <td> Panama </td> <td>  1745000 </td> </tr>
+<tr><td> 75 </td> <td> Mozambique </td> <td>  1661000 </td> </tr>
+<tr><td> 76 </td> <td> Ecuador </td> <td>  1557000 </td> </tr>
+<tr><td> 77 </td> <td> Sri Lanka </td> <td>  1527000 </td> </tr>
+<tr><td> 78 </td> <td> Oman </td> <td>  1519000 </td> </tr>
+<tr><td> 79 </td> <td> Guatemala </td> <td>  1455000 </td> </tr>
+<tr><td> 80 </td> <td> Lebanon </td> <td>  1355000 </td> </tr>
+<tr><td> 81 </td> <td> Montenegro </td> <td>  1350000 </td> </tr>
+<tr><td> 82 </td> <td> El Salvador </td> <td>  1345000 </td> </tr>
+<tr><td> 83 </td> <td> Nicaragua </td> <td>  1330000 </td> </tr>
+<tr><td> 84 </td> <td> Uganda </td> <td>  1266000 </td> </tr>
+<tr><td> 85 </td> <td> Kenya </td> <td>  1261000 </td> </tr>
+<tr><td> 86 </td> <td> Armenia </td> <td>  1204000 </td> </tr>
+<tr><td> 87 </td> <td> United Republic of Tanzania </td> <td>  1113000 </td> </tr>
+<tr><td> 88 </td> <td> Ghana </td> <td>  1093000 </td> </tr>
+<tr><td> 89 </td> <td> Lesotho </td> <td>  1079000 </td> </tr>
+<tr><td> 90 </td> <td> Luxembourg </td> <td>  1038000 </td> </tr>
+<tr><td> 91 </td> <td> Republic of Serbia </td> <td>  1029000 </td> </tr>
+<tr><td> 92 </td> <td> Iceland </td> <td>   998000 </td> </tr>
+<tr><td> 93 </td> <td> Zambia </td> <td>   947000 </td> </tr>
+<tr><td> 94 </td> <td> Rwanda </td> <td>   926000 </td> </tr>
+<tr><td> 95 </td> <td> Iraq </td> <td>   892000 </td> </tr>
+<tr><td> 96 </td> <td> Bolivia </td> <td>   871000 </td> </tr>
+<tr><td> 97 </td> <td> Honduras </td> <td>   868000 </td> </tr>
+<tr><td> 98 </td> <td> Venezuela </td> <td>   857000 </td> </tr>
+<tr><td> 99 </td> <td> Senegal </td> <td>   836000 </td> </tr>
+<tr><td> 100 </td> <td> Nepal </td> <td>   790000 </td> </tr>
+<tr><td> 101 </td> <td> Ethiopia </td> <td>   770000 </td> </tr>
+<tr><td> 102 </td> <td> Fiji </td> <td>   693000 </td> </tr>
+<tr><td> 103 </td> <td> Sudan </td> <td>   684000 </td> </tr>
+<tr><td> 104 </td> <td> Paraguay </td> <td>   649000 </td> </tr>
+<tr><td> 105 </td> <td> Angola </td> <td>   595000 </td> </tr>
+<tr><td> 106 </td> <td> West Bank and Gaza </td> <td>   556000 </td> </tr>
+<tr><td> 107 </td> <td> Bosnia and Herzegovina </td> <td>   536000 </td> </tr>
+<tr><td> 108 </td> <td> Haiti </td> <td>   465000 </td> </tr>
+<tr><td> 109 </td> <td> Macedonia </td> <td>   425000 </td> </tr>
+<tr><td> 110 </td> <td> Trinidad and Tobago </td> <td>   412000 </td> </tr>
+<tr><td> 111 </td> <td> Mongolia </td> <td>   393000 </td> </tr>
+<tr><td> 112 </td> <td> Democratic Republic of the Congo </td> <td>   373000 </td> </tr>
+<tr><td> 113 </td> <td> Belize </td> <td>   321000 </td> </tr>
+<tr><td> 114 </td> <td> Togo </td> <td>   282000 </td> </tr>
+<tr><td> 115 </td> <td> Suriname </td> <td>   252000 </td> </tr>
+<tr><td> 116 </td> <td> Benin </td> <td>   242000 </td> </tr>
+<tr><td> 117 </td> <td> Madagascar </td> <td>   222000 </td> </tr>
+<tr><td> 118 </td> <td> Tajikistan </td> <td>   213000 </td> </tr>
+<tr><td> 119 </td> <td> Guyana </td> <td>   206000 </td> </tr>
+<tr><td> 120 </td> <td> Burkina Faso </td> <td>   191000 </td> </tr>
+<tr><td> 121 </td> <td> Papua New Guinea </td> <td>   182000 </td> </tr>
+<tr><td> 122 </td> <td> Mali </td> <td>   168000 </td> </tr>
+<tr><td> 123 </td> <td> Belarus </td> <td>   137000 </td> </tr>
+<tr><td> 124 </td> <td> Niger </td> <td>   135000 </td> </tr>
+<tr><td> 125 </td> <td> Bhutan </td> <td>   134000 </td> </tr>
+<tr><td> 126 </td> <td> Bangladesh </td> <td>   125000 </td> </tr>
+<tr><td> 127 </td> <td> Chad </td> <td>   122000 </td> </tr>
+<tr><td> 128 </td> <td> Vanuatu </td> <td>   109000 </td> </tr>
+<tr><td> 129 </td> <td> New Caledonia </td> <td>   107000 </td> </tr>
+<tr><td> 130 </td> <td> Sierra Leone </td> <td>    44000 </td> </tr>
+<tr><td> 131 </td> <td> Guinea </td> <td>    33000 </td> </tr>
+<tr><td> 132 </td> <td> Solomon Islands </td> <td>    20100 </td> </tr>
+<tr><td> 133 </td> <td> Moldova </td> <td>    11000 </td> </tr>
+</table>
+
+
+ <br>
+<p> <a href="project 5.html"><span style="text-decoration:underline;">BACK TO MAP</span></a> </p>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;" colspan="2">
+  <p id="VisitorInfo"/>
+</td></tr>
+</tbody></table>
+
+</script>
+
+</td></tr></tbody></table>
+
+</body>
+</html>

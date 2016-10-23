@@ -244,9 +244,7 @@ function getColor(d) {
        }
 }
 
-// return d > 64995000 ?'#31a354': 
-//           d > 39811000 ?'#78c679':
-//
+
 function style(feature) {
     return {
 	fillColor:   getColor(feature.properties.tourism),
@@ -312,31 +310,8 @@ function toggleLayer(layer)
 function toggleFeature(e) {
     var layer = e.target;
     toggleLayer(layer);
-    // if( layer.isSelected ) {
-    // 	layer.setStyle( style(layer.feature) );
-    // 	resetHighlight(e);
-	
-    // 	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-    // 	    layer.bringToFront();
-    // 	}
-    // 	nSelected -= 1;
-    // 	if( layer.feature.properties.tourism > 0 ) {
-    // 	  sumRank -= layer.feature.properties.rank;
-    // 	  nSelectedWithData -= 1;
-    // 	}
-    // } else /* unselected */ {
-    // 	highlightFeature(e);
-    // 	nSelected += 1;
-    // 	if( layer.feature.properties.tourism > 0 ) {
-    // 	  sumRank += layer.feature.properties.rank;
-    // 	  nSelectedWithData += 1;
-    // 	}
-    // }
+    
 
-    // showSelected();
-
-    // // toggle selected state
-    // layer.isSelected = ! layer.isSelected;
 }
 
 
